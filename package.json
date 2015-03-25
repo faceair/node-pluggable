@@ -1,0 +1,17 @@
+{
+  "name": "node-pluggable",
+  "version": "0.0.1",
+  "description": "hook",
+  "main": "index.coffee",
+  "repository": {
+    "type": "git",
+    "url": "/Users/faceair/Dropbox/Git/node-pluggable"
+  },
+  "author": "faceair",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^0.9.0",
+    "dottie": "^0.3.1",
+    "underscore": "^1.8.2"
+  }
+}

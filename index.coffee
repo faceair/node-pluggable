@@ -1,4 +1,3 @@
-dottie = require 'dottie'
 async = require 'async'
 _ = require 'underscore'
 

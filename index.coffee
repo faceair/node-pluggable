@@ -1,13 +1,15 @@
 async = require 'async'
 _ = require 'underscore'
 
-@stack = []
+pluggable = {}
 
-exports.match = (param) ->
-  _.filter @stack, ([match_param]) ->
+pluggable.stack = []
+
+pluggable.match = (param) ->
+  _.filter pluggable.stack, ([match_param]) ->
     param.match match_param
 
-exports.use = (fns...) ->
+pluggable.use = (fns...) ->
   match_param = _.first fns
   if _.isRegExp match_param
     match_param = fns.shift()
@@ -20,18 +22,20 @@ exports.use = (fns...) ->
       throw new Error 'Create regexp failed.'
 
   for fn in fns
-    @stack.push [match_param, fn]
-  @
+    pluggable.stack.push [match_param, fn]
+  pluggable
 
-exports.del = (match_param, fns...) ->
-  matched_stack = exports.match match_param
-  @stack = _.filter matched_stack, ([matched_param, matched_fns]) ->
+pluggable.del = (match_param, fns...) ->
+  matched_stack = pluggable.match match_param
+  pluggable.stack = _.filter matched_stack, ([matched_param, matched_fns]) ->
     ! _.some fns, (fn) ->
       fn.toString() is matched_fns.toString()
-  @
+  pluggable
 
-exports.on = (match_param, params..., callback) ->
-  async.eachSeries exports.match(match_param), ([match_param, fn], callback) ->
+pluggable.on = (match_param, params..., callback) ->
+  async.eachSeries pluggable.match(match_param), ([match_param, fn], callback) ->
     fn.apply this, _.union params, [ callback ]
   , (err) ->
     callback err if callback
+
+module.exports = pluggable

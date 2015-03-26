@@ -2,10 +2,10 @@
   "name": "node-pluggable",
   "version": "0.0.1",
   "description": "hook",
-  "main": "index.coffee",
+  "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "/Users/faceair/Dropbox/Git/node-pluggable"
+    "url": "git@github.com:faceair/node-pluggable.git"
   },
   "author": "faceair",
   "license": "MIT",

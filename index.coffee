@@ -4,10 +4,10 @@ _ = require 'underscore'
 @stack = []
 
 exports.match = (param) ->
-  _.filter @stack, ([match_param, fn]) ->
+  _.filter @stack, ([match_param]) ->
     param.match match_param
 
-exports.split = (fns) ->
+exports.use = (fns...) ->
   match_param = _.first fns
   if _.isRegExp match_param
     match_param = fns.shift()
@@ -18,10 +18,6 @@ exports.split = (fns) ->
       match_param = new RegExp(fns.shift(), 'i')
     catch
       throw new Error 'Create regexp failed.'
-  return [match_param, fns]
-
-exports.use = (fns...) ->
-  [match_param, fns] = exports.split fns
 
   for fn in fns
     @stack.push [match_param, fn]

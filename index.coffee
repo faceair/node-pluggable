@@ -26,11 +26,6 @@ exports.remove = (hook_name, plugin_remove) ->
   return exports.set hook_name, hooks
 
 exports.run = (hook_name, params..., callback) ->
-  async.each exports.get(hook_name), (plugin, callback) ->
-    plugin.apply this, _.union params, [ callback ]
-  , callback
-
-exports.runSeries = (hook_name, params..., callback) ->
   async.eachSeries exports.get(hook_name), (plugin, callback) ->
     plugin.apply this, _.union params, [ callback ]
   , callback

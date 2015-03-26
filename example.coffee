@@ -14,6 +14,3 @@ article =
 
 pluggable.run 'article.create', ->
   console.log article
-
-  pluggable.runSeries 'article.update', ->
-    console.log article

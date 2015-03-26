@@ -2,30 +2,41 @@ dottie = require 'dottie'
 async = require 'async'
 _ = require 'underscore'
 
-exports.hooks = {}
+@stack = []
 
-exports.get = (hook_name) ->
-  return dottie.get(exports.hooks, hook_name) ? []
+exports.match = (param) ->
+  _.filter @stack, ([match_param, fn]) ->
+    param.match match_param
 
-exports.set = (hook_name, hooks) ->
-  dottie.set exports.hooks, hook_name, hooks
-  return exports.hooks
+exports.split = (fns) ->
+  match_param = _.first fns
+  if _.isRegExp match_param
+    match_param = fns.shift()
+  else if _.isFunction match_param
+    match_param = /.*/
+  else if _.isString match_param
+    try
+      match_param = new RegExp(fns.shift(), 'i')
+    catch
+      throw new Error 'Create regexp failed.'
+  return [match_param, fns]
 
-exports.register = (hook_name, plugin) ->
-  hooks = exports.get hook_name
-  hooks.push plugin
-  return exports.set hook_name, hooks
+exports.use = (fns...) ->
+  [match_param, fns] = exports.split fns
 
-exports.remove = (hook_name, plugin_remove) ->
-  hooks = exports.get hook_name
-  hooks = _.compact _.map hooks, (plugin_exist) ->
-    if plugin_exist.toString() is plugin_remove.toString()
-      return null
-    else
-      return plugin_exist
-  return exports.set hook_name, hooks
+  for fn in fns
+    @stack.push [match_param, fn]
+  @
 
-exports.run = (hook_name, params..., callback) ->
-  async.eachSeries exports.get(hook_name), (plugin, callback) ->
-    plugin.apply this, _.union params, [ callback ]
-  , callback
+exports.del = (match_param, fns...) ->
+  matched_stack = exports.match match_param
+  @stack = _.filter matched_stack, ([matched_param, matched_fns]) ->
+    ! _.some fns, (fn) ->
+      fn.toString() is matched_fns.toString()
+  @
+
+exports.on = (match_param, params..., callback) ->
+  async.eachSeries exports.match(match_param), ([match_param, fn], callback) ->
+    fn.apply this, _.union params, [ callback ]
+  , (err) ->
+    callback err if callback

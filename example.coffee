@@ -1,16 +1,20 @@
 pluggable = require './index'
 
-pluggable.register 'article.create', (callback) ->
-  callback()
-
-pluggable.register 'article.update', (callback) ->
-  console.log 'article.update'
-  callback()
+pluggable.use('article.create', (article, next) ->
+  article.hook = 'article.create'
+  next()
+).del('article.create', (article, next) ->
+  article.hook = 'article.create'
+  next()
+).use('article.create', (article, next) ->
+  article.author = 'pluggable'
+  next()
+)
 
 article =
   title: 'title'
   author: 'author'
   content: 'content'
 
-pluggable.run 'article.create', ->
+pluggable.on 'article.create', article, ->
   console.log article

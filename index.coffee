@@ -1,7 +1,8 @@
 async = require 'async'
 _ = require 'underscore'
+{EventEmitter} = require 'events'
 
-pluggable = {}
+pluggable = new EventEmitter()
 
 pluggable.stack = []
 
@@ -32,10 +33,15 @@ pluggable.del = (match_param, fns...) ->
       fn.toString() is matched_fns.toString()
   pluggable
 
-pluggable.on = (match_param, params..., callback) ->
+pluggable.run = (match_param, params..., callback) ->
   async.eachSeries pluggable.match(match_param), ([match_param, fn], callback) ->
     fn.apply this, _.union params, [ callback ]
   , (err) ->
     callback err if callback
+
+pluggable.bind = (match_param, fns...) ->
+  for fn in fns
+    pluggable.on match_param, fn
+  pluggable
 
 module.exports = pluggable

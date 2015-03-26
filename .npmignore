@@ -3,3 +3,5 @@ node_modules
 index.coffee
 example.coffee
 index.js.map
+example.js
+example.js.map

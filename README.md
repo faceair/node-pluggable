@@ -28,8 +28,16 @@ Simply install it through npm
       author: 'author'
       content: 'content'
 
-    pluggable.on 'article.create', article, ->
+    pluggable.run 'article.create', article, ->
       console.log article
+
+    pluggable.bind 'article.update', (article) ->
+      console.log article
+    , (article) ->
+      console.log article.length
+
+    pluggable.emit 'article.update', 'just a message.'
+
 
 ### License
 

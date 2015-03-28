@@ -39,6 +39,7 @@ class Pluggable
       fn.apply @, _.union params, [ callback ]
     , (err) ->
       callback err if callback
+    @
 
   on: (params...) ->
     @event.on.apply @, params

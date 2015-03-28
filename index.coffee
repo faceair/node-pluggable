@@ -41,7 +41,7 @@ class Pluggable
       callback err if callback
     @
 
-  on: (params...) ->
+  on: (params...) =>
     @event.on.apply @, params
     @
 
@@ -50,7 +50,7 @@ class Pluggable
       @on match_param, fn
     @
 
-  emit: (params...) ->
+  emit: (params...) =>
     @event.emit.apply @, params
     @
 

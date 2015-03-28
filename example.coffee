@@ -1,4 +1,5 @@
-pluggable = require('./index')()
+Pluggable = require './index.coffee'
+pluggable = new Pluggable()
 
 pluggable.use('article.create', (article, next) ->
   article.hook = 'article.create'

@@ -10,7 +10,8 @@ Simply install it through npm
 
 ### Example
 
-    pluggable = require('node-pluggable')()
+    Pluggable = require 'node-pluggable'
+    pluggable = new Pluggable()
 
     pluggable.use('article.create', (article, next) ->
       article.hook = 'article.create'

@@ -9,7 +9,10 @@ class Pluggable
 
   match: (param) =>
     _.filter @stack, ([match_param]) ->
-      param.match match_param
+      try
+        param.match match_param
+      catch
+        false
 
   use: (fns...) =>
     match_param = _.first fns
@@ -35,8 +38,15 @@ class Pluggable
     @
 
   run: (match_param, params..., callback) =>
+    unless _.isFunction callback
+      params = _.union params, [ callback ]
+      callback = undefined
+
     async.eachSeries @match(match_param), ([match_param, fn], callback) ->
-      fn.apply @, _.union params, [ callback ]
+      try
+        fn.apply @, _.union params, [ callback ]
+      catch err
+        callback err
     , (err) ->
       callback err if callback
     @

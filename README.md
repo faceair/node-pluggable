@@ -3,6 +3,7 @@
 Add your Hook more easily.
 
 [![Build Status](https://travis-ci.org/faceair/node-pluggable.svg?branch=master)](https://travis-ci.org/faceair/node-pluggable)
+[![Coverage Status](https://coveralls.io/repos/faceair/node-pluggable/badge.svg)](https://coveralls.io/r/faceair/node-pluggable)
 
 ## Installation
 

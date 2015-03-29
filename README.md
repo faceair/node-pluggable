@@ -2,27 +2,29 @@
 
 Add your Hook more easily.
 
-### Use
+[![Build Status](https://travis-ci.org/faceair/node-pluggable.svg?branch=master)](https://travis-ci.org/faceair/node-pluggable)
 
-Simply install it through npm
+## Installation
 
 `npm install node-pluggable`
 
-### Example
+## API
 
     Pluggable = require 'node-pluggable'
     pluggable = new Pluggable()
 
+### use([match_param ,] hook_callback...) => this
+
     pluggable.use('article.create', (article, next) ->
       article.hook = 'article.create'
       next()
-    ).del('article.create', (article, next) ->
-      article.hook = 'article.create'
-      next()
-    ).use('article.create', (article, next) ->
-      article.author = 'pluggable'
-      next()
     )
+
++ this method is similar as express's middleware
++ `match_param` must be string or regex
++ `hook_callback` will be called when param is matched
+
+#### run(param, hook_callback_params...[, callback]) => this
 
     article =
       title: 'title'
@@ -32,22 +34,45 @@ Simply install it through npm
     pluggable.run 'article.create', article, ->
       console.log article
 
++ `param` will match with match_param, must be string
++ `hook_callback_params` will send to hook_callback
+
+### del([match_param ,] hook_callback...) => this
+
+    pluggable.del('article.create', (article, next) ->
+      article.hook = 'article.create'
+      next()
+    )
+
++ reverse with use
+
+### bind(hook_name, hook_callback...) => this
+
     pluggable.bind 'article.update', (article) ->
       console.log article
     , (article) ->
       console.log article.length
 
++ `hook_callback` will be called when event be emitted
+
+### on(hook_name, hook_callback) => this
+
+    pluggable.on 'article.update', (article) ->
+      console.log article
+
+* similar as bind
+
+### emit(hook_name, data) => this
+
     pluggable.emit 'article.update', 'just a message.'
+    
++ emit an event
+
+### demo
+
+* [lyssa](https://github.com/faceair/lyssa)
 
 
 ### License
 
-The MIT License (MIT)
-
-Copyright (c) 2015 faceair
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+[MIT](License)

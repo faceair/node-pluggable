@@ -2,3 +2,5 @@
 node_modules
 lib/pluggable.js
 lib/pluggable.js.map
+example.js
+example.js.map

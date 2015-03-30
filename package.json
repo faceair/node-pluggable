@@ -19,10 +19,10 @@
     "underscore": "^1.8.2"
   },
   "devDependencies": {
-    "coffee-script": "^1.7.1",
-    "mocha": "^2.0.0",
-    "chai": "^1.9.2",
-    "coffee-coverage": "^0.4.2",
-    "mocha-reporter-cov-summary": "^0.1.0"
+    "chai": "^2.2.0",
+    "coffee-coverage": "^0.4.5",
+    "coffee-script": "^1.9.1",
+    "mocha": "^2.2.1",
+    "mocha-reporter-cov-summary": "^0.1.1"
   }
 }

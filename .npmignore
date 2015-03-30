@@ -6,3 +6,4 @@ test
 example.coffee
 example.js
 example.js.map
+.coveralls.yml

@@ -1,6 +1,6 @@
 {
   "name": "node-pluggable",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Add your Hook more easily.",
   "main": "./lib/pluggable.js",
   "repository": {
@@ -23,6 +23,8 @@
     "coffee-coverage": "^0.4.5",
     "coffee-script": "^1.9.1",
     "mocha": "^2.2.1",
+    "coveralls": "^2.11.2",
+    "mocha-lcov-reporter": "0.0.2",
     "mocha-reporter-cov-summary": "^0.1.1"
   }
 }

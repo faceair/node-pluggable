@@ -3,7 +3,10 @@
 Add your Hook more easily.
 
 [![Build Status](https://travis-ci.org/faceair/node-pluggable.svg?branch=master)](https://travis-ci.org/faceair/node-pluggable)
-[![Coverage Status](https://coveralls.io/repos/faceair/node-pluggable/badge.svg)](https://coveralls.io/r/faceair/node-pluggable)
+
+## Demo
+
+* [lyssa](https://github.com/faceair/lyssa)
 
 ## Installation
 
@@ -21,9 +24,9 @@ Add your Hook more easily.
       next()
     )
 
-+ this method is similar as express's middleware
-+ `match_param` must be string or regex
-+ `hook_callback` will be called when param is matched
++ this method is similar to [connect](https://github.com/senchalabs/connect)
++ `match_param` must be `string` or `regex`
++ `hook_callback` will be called when `param` is matched
 
 #### run(param, hook_callback_params...[, callback]) => this
 
@@ -35,8 +38,8 @@ Add your Hook more easily.
     pluggable.run 'article.create', article, ->
       console.log article
 
-+ `param` will match with match_param, must be string
-+ `hook_callback_params` will send to hook_callback
++ `param` will match with `match_param`, which must be `string`
++ `hook_callback_params` will be send to `hook_callback`
 
 ### del([match_param ,] hook_callback...) => this
 
@@ -45,7 +48,7 @@ Add your Hook more easily.
       next()
     )
 
-+ reverse with use
++ reverse of `use`
 
 ### bind(hook_name, hook_callback...) => this
 
@@ -61,7 +64,7 @@ Add your Hook more easily.
     pluggable.on 'article.update', (article) ->
       console.log article
 
-* similar as bind
+* similar to `bind`
 
 ### emit(hook_name, data) => this
 
@@ -69,11 +72,6 @@ Add your Hook more easily.
     
 + emit an event
 
-### demo
-
-* [lyssa](https://github.com/faceair/lyssa)
-
-
 ### License
 
-[MIT](License)
+[MIT](LICENSE)

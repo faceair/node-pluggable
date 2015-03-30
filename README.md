@@ -74,4 +74,4 @@ Add your Hook more easily.
 
 ### License
 
-[MIT](LICENSE)
+[MIT](License)

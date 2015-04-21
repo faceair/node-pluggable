@@ -1,20 +1,20 @@
 async = require 'async'
-_ = require 'underscore'
+_ = require 'lodash'
 {EventEmitter} = require 'events'
 
-class Pluggable
+module.exports = class Pluggable
   constructor: ->
-    @stack = []
-    @event = new EventEmitter()
+    @_stack = []
+    @_event = new EventEmitter()
 
-  match: (param) =>
-    _.filter @stack, ([match_param]) ->
+  _match: (param) ->
+    _.filter @_stack, ([match_param]) ->
       try
         param.match match_param
       catch
         false
 
-  use: (fns...) =>
+  use: (fns...) ->
     match_param = _.first fns
     if _.isRegExp match_param
       match_param = fns.shift()
@@ -27,41 +27,39 @@ class Pluggable
         throw new Error 'Create regexp failed.'
 
     for fn in fns
-      @stack.push [match_param, fn]
+      @_stack.push [match_param, fn]
     @
 
-  del: (match_param, fns...) =>
-    matched_stack = @match match_param
-    @stack = _.filter matched_stack, ([matched_param, matched_fns]) ->
+  del: (match_param, fns...) ->
+    matched_stack = @_match match_param
+    @_stack = _.filter matched_stack, ([matched_param, matched_fns]) ->
       ! _.some fns, (fn) ->
         fn.toString() is matched_fns.toString()
     @
 
-  run: (match_param, params..., callback) =>
+  run: (match_param, params..., callback) ->
     unless _.isFunction callback
       params = _.union params, [ callback ]
       callback = undefined
 
-    async.eachSeries @match(match_param), ([match_param, fn], callback) ->
+    async.eachSeries @_match(match_param), ([match_param, fn], callback) =>
       try
         fn.apply @, _.union params, [ callback ]
       catch err
         callback err
-    , (err) ->
+    , (err) =>
       callback err if callback
+      @
+
+  on: (params...) ->
+    @_event.on.apply @, params
     @
 
-  on: (params...) =>
-    @event.on.apply @, params
-    @
-
-  bind: (match_param, fns...) =>
+  bind: (match_param, fns...) ->
     for fn in fns
       @on match_param, fn
     @
 
-  emit: (params...) =>
-    @event.emit.apply @, params
+  emit: (params...) ->
+    @_event.emit.apply @, params
     @
-
-module.exports = Pluggable

@@ -6,7 +6,7 @@ if process.env.COV_TEST == 'true'
     basePath: "#{__dirname}/../.."
     exclude: ['test', 'node_modules', '.git', 'example.coffee']
 
-global._ = require 'underscore'
+global._ = require 'lodash'
 global.fs = require 'fs'
 global.chai = require 'chai'
 global.expect = chai.expect

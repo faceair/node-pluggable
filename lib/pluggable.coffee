@@ -49,7 +49,7 @@ module.exports = class Pluggable
         callback err
     , (err) =>
       callback err if callback
-      @
+    @
 
   on: (params...) ->
     @_event.on.apply @, params

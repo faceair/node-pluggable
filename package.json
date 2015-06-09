@@ -1,6 +1,6 @@
 {
   "name": "node-pluggable",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Add your Hook more easily.",
   "main": "./lib/pluggable.js",
   "repository": {
@@ -8,10 +8,7 @@
     "url": "git@github.com:faceair/node-pluggable.git"
   },
   "scripts": {
-    "test": "COV_TEST=true ./node_modules/.bin/mocha --require coffee-coverage/register --compilers coffee:coffee-script/register --require test/support/env --reporter node_modules/mocha-reporter-cov-summary -- test/*.test.coffee",
-    "test-only": "./node_modules/.bin/mocha --require coffee-coverage/register --compilers coffee:coffee-script/register --require test/support/env -- test/*.test.coffee",
-    "test-cov-html": "COV_TEST=true ./node_modules/.bin/mocha --require coffee-coverage/register --compilers coffee:coffee-script/register --require test/support/env --reporter html-cov -- test/*.test.coffee > coverage-reporter.html",
-    "test-coveralls": "COV_TEST=true ./node_modules/.bin/mocha --require coffee-coverage/register --compilers coffee:coffee-script/register --require test/support/env --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js -- test/*.test.coffee"
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register --require test/support/env -- test/*.test.coffee"
   },
   "author": "faceair",
   "license": "MIT",
@@ -21,11 +18,7 @@
   },
   "devDependencies": {
     "chai": "^2.2.0",
-    "coffee-coverage": "^0.4.5",
     "coffee-script": "^1.9.1",
-    "mocha": "^2.2.1",
-    "coveralls": "^2.11.2",
-    "mocha-lcov-reporter": "0.0.2",
-    "mocha-reporter-cov-summary": "^0.1.1"
+    "mocha": "^2.2.1"
   }
 }

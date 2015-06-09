@@ -3,7 +3,6 @@
 Add your Hook more easily.
 
 [![Build Status](https://travis-ci.org/faceair/node-pluggable.svg?branch=master)](https://travis-ci.org/faceair/node-pluggable)
-[![Coverage Status](https://coveralls.io/repos/faceair/node-pluggable/badge.svg)](https://coveralls.io/r/faceair/node-pluggable)
 
 ## Demo
 
@@ -16,11 +15,11 @@ Add your Hook more easily.
 ## API
 
     Pluggable = require 'node-pluggable'
-    pluggable = new Pluggable()
+    plugin = new Pluggable()
 
 ### use([match_param ,] hook_callback...) => this
 
-    pluggable.use('article.create', (article, next) ->
+    plugin.use('article.create', (article, next) ->
       article.hook = 'article.create'
       next()
     )
@@ -36,24 +35,15 @@ Add your Hook more easily.
       author: 'author'
       content: 'content'
 
-    pluggable.run 'article.create', article, ->
+    plugin.run 'article.create', article, ->
       console.log article
 
 + `param` will match with `match_param`, which must be `string`
 + `hook_callback_params` will be send to `hook_callback`
 
-### del([match_param ,] hook_callback...) => this
-
-    pluggable.del('article.create', (article, next) ->
-      article.hook = 'article.create'
-      next()
-    )
-
-+ reverse of `use`
-
 ### bind(hook_name, hook_callback...) => this
 
-    pluggable.bind 'article.update', (article) ->
+    plugin.bind 'article.update', (article) ->
       console.log article
     , (article) ->
       console.log article.length
@@ -62,15 +52,15 @@ Add your Hook more easily.
 
 ### on(hook_name, hook_callback) => this
 
-    pluggable.on 'article.update', (article) ->
+    plugin.on 'article.update', (article) ->
       console.log article
 
 * similar to `bind`
 
 ### emit(hook_name, data) => this
 
-    pluggable.emit 'article.update', 'just a message.'
-    
+  plugin.emit 'article.update', 'just a message.'
+
 + emit an event
 
 ### License

@@ -4,6 +4,8 @@ _ = require 'lodash'
 
 module.exports = class Pluggable extends EventEmitter
   use: (fns...) ->
+    @container = [] if _.isUndefined @container
+
     match_param = _.first fns
     if _.isRegExp match_param
       match_param = fns.shift()
@@ -15,13 +17,13 @@ module.exports = class Pluggable extends EventEmitter
       catch
         throw new Error 'Create regexp failed.'
 
-    @container = [] if _.isUndefined @container
-
     for fn in fns
       @container.push [match_param, fn]
     return @
 
   run: (match_param, params..., callback) ->
+    @container = [] if _.isUndefined @container
+
     unless _.isFunction callback
       params = _.union params, [ callback ]
       callback = undefined

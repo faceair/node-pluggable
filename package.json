@@ -1,6 +1,6 @@
 {
   "name": "node-pluggable",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Add your Hook more easily.",
   "main": "./lib/pluggable.js",
   "repository": {

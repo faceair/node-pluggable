@@ -1,9 +1,2 @@
-.idea
 node_modules
-lib/pluggable.coffee
-lib/pluggable.js.map
-test
-example.coffee
-example.js
-example.js.map
 .coveralls.yml

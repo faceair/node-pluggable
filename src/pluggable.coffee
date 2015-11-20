@@ -18,7 +18,7 @@ module.exports = class Pluggable extends EventEmitter
         throw new Error 'Create regexp failed.'
 
     for fn in fns
-      @container.push [match_param, fn]
+      @container.push [match_param, fn] if fn
     return @
 
   run: (match_param, params..., callback) ->
